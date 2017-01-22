@@ -1,0 +1,25 @@
+spring:
+  aop:
+    proxyTargetClass: true
+  application:
+    name: API-GatwayZuul
+
+# Define the port where the API gateway server would be running
+server:
+  port: 8765
+
+# Define the Eureka server that handles service registration
+eureka:
+  instance:
+      hostname: docker.server.com
+      port: 8761
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+
+zuul:
+  routes:
+    hello:
+      path: /hello/**
+      url: http://localhost:8081/spring-zuul-hello-resource/hello
+  add-proxy-headers: true      
